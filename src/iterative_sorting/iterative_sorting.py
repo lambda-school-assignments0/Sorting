@@ -36,5 +36,27 @@ def bubble_sort( arr ):
 
 # STRETCH: implement the Count Sort function below
 def count_sort( arr, maximum=-1 ):
+    # Handle edge case arr = []
+    if arr == []:
+        return []
 
-    return arr
+    # Initialize data
+    count = [0] * (max(arr) + 1)
+
+    # Count number of elements
+    for num in arr:
+        if num < 0:
+            return "Error, negative numbers not allowed in Count Sort"
+        count[num] += 1
+
+    # Modify count array so ea. index stores sum of prev. counts
+    for i in range(1, len(count)):
+        count[i] += count[i-1]
+
+    # Go through arr and place them in a new array in order according to count
+    places = [0] * (max(count) + 1)
+    for num in arr:
+        places[count[num]] = num
+        count[num] -= 1
+
+    return places[1:]
